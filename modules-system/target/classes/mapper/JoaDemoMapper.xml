@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzf.modules.system.mapper.JoaDemoMapper">
+  <resultMap id="BaseResultMap" type="com.wzf.modules.system.entity.JoaDemo">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="days" jdbcType="INTEGER" property="days" />
+    <result column="begin_date" jdbcType="TIMESTAMP" property="beginDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="bpm_status" jdbcType="VARCHAR" property="bpmStatus" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, days, begin_date, end_date, reason, bpm_status, create_by, create_time, 
+    update_time, update_by
+  </sql>
+  <select id="selectByExample" parameterType="com.wzf.modules.system.entity.JoaDemoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from joa_demo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.wzf.modules.system.entity.JoaDemoExample">
+    delete from joa_demo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wzf.modules.system.entity.JoaDemo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into joa_demo (name, days, begin_date, 
+      end_date, reason, bpm_status, 
+      create_by, create_time, update_time, 
+      update_by)
+    values (#{name,jdbcType=VARCHAR}, #{days,jdbcType=INTEGER}, #{beginDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{reason,jdbcType=VARCHAR}, #{bpmStatus,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzf.modules.system.entity.JoaDemo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into joa_demo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        name,
+      </if>
+      <if test="days != null">
+        days,
+      </if>
+      <if test="beginDate != null">
+        begin_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="bpmStatus != null">
+        bpm_status,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="days != null">
+        #{days,jdbcType=INTEGER},
+      </if>
+      <if test="beginDate != null">
+        #{beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="bpmStatus != null">
+        #{bpmStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wzf.modules.system.entity.JoaDemoExample" resultType="java.lang.Integer">
+    select count(*) from joa_demo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update joa_demo
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.days != null">
+        days = #{record.days,jdbcType=INTEGER},
+      </if>
+      <if test="record.beginDate != null">
+        begin_date = #{record.beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDate != null">
+        end_date = #{record.endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reason != null">
+        reason = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bpmStatus != null">
+        bpm_status = #{record.bpmStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update joa_demo
+    set id = #{record.id,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      days = #{record.days,jdbcType=INTEGER},
+      begin_date = #{record.beginDate,jdbcType=TIMESTAMP},
+      end_date = #{record.endDate,jdbcType=TIMESTAMP},
+      reason = #{record.reason,jdbcType=VARCHAR},
+      bpm_status = #{record.bpmStatus,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

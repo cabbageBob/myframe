@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzf.modules.system.mapper.SysSmsMapper">
+  <resultMap id="BaseResultMap" type="com.wzf.modules.system.entity.SysSms">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="es_title" jdbcType="VARCHAR" property="esTitle" />
+    <result column="es_type" jdbcType="VARCHAR" property="esType" />
+    <result column="es_receiver" jdbcType="VARCHAR" property="esReceiver" />
+    <result column="es_param" jdbcType="VARCHAR" property="esParam" />
+    <result column="es_send_time" jdbcType="TIMESTAMP" property="esSendTime" />
+    <result column="es_send_status" jdbcType="VARCHAR" property="esSendStatus" />
+    <result column="es_send_num" jdbcType="INTEGER" property="esSendNum" />
+    <result column="es_result" jdbcType="VARCHAR" property="esResult" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wzf.modules.system.entity.SysSms">
+    <result column="es_content" jdbcType="LONGVARCHAR" property="esContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, es_title, es_type, es_receiver, es_param, es_send_time, es_send_status, es_send_num, 
+    es_result, remark, create_by, create_time, update_by, update_time
+  </sql>
+  <sql id="Blob_Column_List">
+    es_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.wzf.modules.system.entity.SysSmsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_sms
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.wzf.modules.system.entity.SysSmsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_sms
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_sms
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_sms
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wzf.modules.system.entity.SysSmsExample">
+    delete from sys_sms
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wzf.modules.system.entity.SysSms">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_sms (es_title, es_type, es_receiver, 
+      es_param, es_send_time, es_send_status, 
+      es_send_num, es_result, remark, 
+      create_by, create_time, update_by, 
+      update_time, es_content)
+    values (#{esTitle,jdbcType=VARCHAR}, #{esType,jdbcType=VARCHAR}, #{esReceiver,jdbcType=VARCHAR}, 
+      #{esParam,jdbcType=VARCHAR}, #{esSendTime,jdbcType=TIMESTAMP}, #{esSendStatus,jdbcType=VARCHAR}, 
+      #{esSendNum,jdbcType=INTEGER}, #{esResult,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{esContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzf.modules.system.entity.SysSms">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_sms
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="esTitle != null">
+        es_title,
+      </if>
+      <if test="esType != null">
+        es_type,
+      </if>
+      <if test="esReceiver != null">
+        es_receiver,
+      </if>
+      <if test="esParam != null">
+        es_param,
+      </if>
+      <if test="esSendTime != null">
+        es_send_time,
+      </if>
+      <if test="esSendStatus != null">
+        es_send_status,
+      </if>
+      <if test="esSendNum != null">
+        es_send_num,
+      </if>
+      <if test="esResult != null">
+        es_result,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="esContent != null">
+        es_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="esTitle != null">
+        #{esTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="esType != null">
+        #{esType,jdbcType=VARCHAR},
+      </if>
+      <if test="esReceiver != null">
+        #{esReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="esParam != null">
+        #{esParam,jdbcType=VARCHAR},
+      </if>
+      <if test="esSendTime != null">
+        #{esSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="esSendStatus != null">
+        #{esSendStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="esSendNum != null">
+        #{esSendNum,jdbcType=INTEGER},
+      </if>
+      <if test="esResult != null">
+        #{esResult,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="esContent != null">
+        #{esContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wzf.modules.system.entity.SysSmsExample" resultType="java.lang.Integer">
+    select count(*) from sys_sms
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_sms
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.esTitle != null">
+        es_title = #{record.esTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.esType != null">
+        es_type = #{record.esType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.esReceiver != null">
+        es_receiver = #{record.esReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.esParam != null">
+        es_param = #{record.esParam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.esSendTime != null">
+        es_send_time = #{record.esSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.esSendStatus != null">
+        es_send_status = #{record.esSendStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.esSendNum != null">
+        es_send_num = #{record.esSendNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.esResult != null">
+        es_result = #{record.esResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.esContent != null">
+        es_content = #{record.esContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sys_sms
+    set id = #{record.id,jdbcType=VARCHAR},
+      es_title = #{record.esTitle,jdbcType=VARCHAR},
+      es_type = #{record.esType,jdbcType=VARCHAR},
+      es_receiver = #{record.esReceiver,jdbcType=VARCHAR},
+      es_param = #{record.esParam,jdbcType=VARCHAR},
+      es_send_time = #{record.esSendTime,jdbcType=TIMESTAMP},
+      es_send_status = #{record.esSendStatus,jdbcType=VARCHAR},
+      es_send_num = #{record.esSendNum,jdbcType=INTEGER},
+      es_result = #{record.esResult,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      es_content = #{record.esContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_sms
+    set id = #{record.id,jdbcType=VARCHAR},
+      es_title = #{record.esTitle,jdbcType=VARCHAR},
+      es_type = #{record.esType,jdbcType=VARCHAR},
+      es_receiver = #{record.esReceiver,jdbcType=VARCHAR},
+      es_param = #{record.esParam,jdbcType=VARCHAR},
+      es_send_time = #{record.esSendTime,jdbcType=TIMESTAMP},
+      es_send_status = #{record.esSendStatus,jdbcType=VARCHAR},
+      es_send_num = #{record.esSendNum,jdbcType=INTEGER},
+      es_result = #{record.esResult,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzf.modules.system.entity.SysSms">
+    update sys_sms
+    <set>
+      <if test="esTitle != null">
+        es_title = #{esTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="esType != null">
+        es_type = #{esType,jdbcType=VARCHAR},
+      </if>
+      <if test="esReceiver != null">
+        es_receiver = #{esReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="esParam != null">
+        es_param = #{esParam,jdbcType=VARCHAR},
+      </if>
+      <if test="esSendTime != null">
+        es_send_time = #{esSendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="esSendStatus != null">
+        es_send_status = #{esSendStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="esSendNum != null">
+        es_send_num = #{esSendNum,jdbcType=INTEGER},
+      </if>
+      <if test="esResult != null">
+        es_result = #{esResult,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="esContent != null">
+        es_content = #{esContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wzf.modules.system.entity.SysSms">
+    update sys_sms
+    set es_title = #{esTitle,jdbcType=VARCHAR},
+      es_type = #{esType,jdbcType=VARCHAR},
+      es_receiver = #{esReceiver,jdbcType=VARCHAR},
+      es_param = #{esParam,jdbcType=VARCHAR},
+      es_send_time = #{esSendTime,jdbcType=TIMESTAMP},
+      es_send_status = #{esSendStatus,jdbcType=VARCHAR},
+      es_send_num = #{esSendNum,jdbcType=INTEGER},
+      es_result = #{esResult,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      es_content = #{esContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzf.modules.system.entity.SysSms">
+    update sys_sms
+    set es_title = #{esTitle,jdbcType=VARCHAR},
+      es_type = #{esType,jdbcType=VARCHAR},
+      es_receiver = #{esReceiver,jdbcType=VARCHAR},
+      es_param = #{esParam,jdbcType=VARCHAR},
+      es_send_time = #{esSendTime,jdbcType=TIMESTAMP},
+      es_send_status = #{esSendStatus,jdbcType=VARCHAR},
+      es_send_num = #{esSendNum,jdbcType=INTEGER},
+      es_result = #{esResult,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

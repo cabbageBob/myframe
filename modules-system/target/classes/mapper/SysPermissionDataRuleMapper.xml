@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzf.modules.system.mapper.SysPermissionDataRuleMapper">
+  <resultMap id="BaseResultMap" type="com.wzf.modules.system.entity.SysPermissionDataRule">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="permission_id" jdbcType="VARCHAR" property="permissionId" />
+    <result column="rule_name" jdbcType="VARCHAR" property="ruleName" />
+    <result column="rule_column" jdbcType="VARCHAR" property="ruleColumn" />
+    <result column="rule_conditions" jdbcType="VARCHAR" property="ruleConditions" />
+    <result column="rule_value" jdbcType="VARCHAR" property="ruleValue" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, permission_id, rule_name, rule_column, rule_conditions, rule_value, status, create_time, 
+    create_by, update_time, update_by
+  </sql>
+  <select id="selectByExample" parameterType="com.wzf.modules.system.entity.SysPermissionDataRuleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_permission_data_rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_permission_data_rule
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_permission_data_rule
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wzf.modules.system.entity.SysPermissionDataRuleExample">
+    delete from sys_permission_data_rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wzf.modules.system.entity.SysPermissionDataRule">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_permission_data_rule (permission_id, rule_name, rule_column, 
+      rule_conditions, rule_value, status, 
+      create_time, create_by, update_time, 
+      update_by)
+    values (#{permissionId,jdbcType=VARCHAR}, #{ruleName,jdbcType=VARCHAR}, #{ruleColumn,jdbcType=VARCHAR}, 
+      #{ruleConditions,jdbcType=VARCHAR}, #{ruleValue,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzf.modules.system.entity.SysPermissionDataRule">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_permission_data_rule
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        permission_id,
+      </if>
+      <if test="ruleName != null">
+        rule_name,
+      </if>
+      <if test="ruleColumn != null">
+        rule_column,
+      </if>
+      <if test="ruleConditions != null">
+        rule_conditions,
+      </if>
+      <if test="ruleValue != null">
+        rule_value,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        #{permissionId,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleName != null">
+        #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleColumn != null">
+        #{ruleColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleConditions != null">
+        #{ruleConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleValue != null">
+        #{ruleValue,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wzf.modules.system.entity.SysPermissionDataRuleExample" resultType="java.lang.Integer">
+    select count(*) from sys_permission_data_rule
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_permission_data_rule
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permissionId != null">
+        permission_id = #{record.permissionId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleName != null">
+        rule_name = #{record.ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleColumn != null">
+        rule_column = #{record.ruleColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleConditions != null">
+        rule_conditions = #{record.ruleConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ruleValue != null">
+        rule_value = #{record.ruleValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_permission_data_rule
+    set id = #{record.id,jdbcType=VARCHAR},
+      permission_id = #{record.permissionId,jdbcType=VARCHAR},
+      rule_name = #{record.ruleName,jdbcType=VARCHAR},
+      rule_column = #{record.ruleColumn,jdbcType=VARCHAR},
+      rule_conditions = #{record.ruleConditions,jdbcType=VARCHAR},
+      rule_value = #{record.ruleValue,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzf.modules.system.entity.SysPermissionDataRule">
+    update sys_permission_data_rule
+    <set>
+      <if test="permissionId != null">
+        permission_id = #{permissionId,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleName != null">
+        rule_name = #{ruleName,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleColumn != null">
+        rule_column = #{ruleColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleConditions != null">
+        rule_conditions = #{ruleConditions,jdbcType=VARCHAR},
+      </if>
+      <if test="ruleValue != null">
+        rule_value = #{ruleValue,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzf.modules.system.entity.SysPermissionDataRule">
+    update sys_permission_data_rule
+    set permission_id = #{permissionId,jdbcType=VARCHAR},
+      rule_name = #{ruleName,jdbcType=VARCHAR},
+      rule_column = #{ruleColumn,jdbcType=VARCHAR},
+      rule_conditions = #{ruleConditions,jdbcType=VARCHAR},
+      rule_value = #{ruleValue,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

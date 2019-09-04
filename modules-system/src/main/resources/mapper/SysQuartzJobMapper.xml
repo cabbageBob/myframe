@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzf.modules.system.mapper.SysQuartzJobMapper">
+  <resultMap id="BaseResultMap" type="com.wzf.modules.system.entity.SysQuartzJob">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="del_flag" jdbcType="INTEGER" property="delFlag" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="job_class_name" jdbcType="VARCHAR" property="jobClassName" />
+    <result column="cron_expression" jdbcType="VARCHAR" property="cronExpression" />
+    <result column="parameter" jdbcType="VARCHAR" property="parameter" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_by, create_time, del_flag, update_by, update_time, job_class_name, cron_expression, 
+    parameter, description, status
+  </sql>
+  <select id="selectByExample" parameterType="com.wzf.modules.system.entity.SysQuartzJobExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_quartz_job
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_quartz_job
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_quartz_job
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wzf.modules.system.entity.SysQuartzJobExample">
+    delete from sys_quartz_job
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wzf.modules.system.entity.SysQuartzJob">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_quartz_job (create_by, create_time, del_flag, 
+      update_by, update_time, job_class_name, 
+      cron_expression, parameter, description, 
+      status)
+    values (#{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{jobClassName,jdbcType=VARCHAR}, 
+      #{cronExpression,jdbcType=VARCHAR}, #{parameter,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzf.modules.system.entity.SysQuartzJob">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_quartz_job
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="jobClassName != null">
+        job_class_name,
+      </if>
+      <if test="cronExpression != null">
+        cron_expression,
+      </if>
+      <if test="parameter != null">
+        parameter,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobClassName != null">
+        #{jobClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="cronExpression != null">
+        #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="parameter != null">
+        #{parameter,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wzf.modules.system.entity.SysQuartzJobExample" resultType="java.lang.Integer">
+    select count(*) from sys_quartz_job
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_quartz_job
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delFlag != null">
+        del_flag = #{record.delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.jobClassName != null">
+        job_class_name = #{record.jobClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cronExpression != null">
+        cron_expression = #{record.cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parameter != null">
+        parameter = #{record.parameter,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_quartz_job
+    set id = #{record.id,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      del_flag = #{record.delFlag,jdbcType=INTEGER},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      job_class_name = #{record.jobClassName,jdbcType=VARCHAR},
+      cron_expression = #{record.cronExpression,jdbcType=VARCHAR},
+      parameter = #{record.parameter,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzf.modules.system.entity.SysQuartzJob">
+    update sys_quartz_job
+    <set>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobClassName != null">
+        job_class_name = #{jobClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="cronExpression != null">
+        cron_expression = #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="parameter != null">
+        parameter = #{parameter,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzf.modules.system.entity.SysQuartzJob">
+    update sys_quartz_job
+    set create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=INTEGER},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      job_class_name = #{jobClassName,jdbcType=VARCHAR},
+      cron_expression = #{cronExpression,jdbcType=VARCHAR},
+      parameter = #{parameter,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

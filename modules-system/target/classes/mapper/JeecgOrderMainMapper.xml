@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzf.modules.system.mapper.JeecgOrderMainMapper">
+  <resultMap id="BaseResultMap" type="com.wzf.modules.system.entity.JeecgOrderMain">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+    <result column="ctype" jdbcType="VARCHAR" property="ctype" />
+    <result column="order_date" jdbcType="TIMESTAMP" property="orderDate" />
+    <result column="order_money" jdbcType="DOUBLE" property="orderMoney" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, order_code, ctype, order_date, order_money, content, create_by, create_time, 
+    update_by, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.wzf.modules.system.entity.JeecgOrderMainExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jeecg_order_main
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jeecg_order_main
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from jeecg_order_main
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wzf.modules.system.entity.JeecgOrderMainExample">
+    delete from jeecg_order_main
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wzf.modules.system.entity.JeecgOrderMain">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jeecg_order_main (order_code, ctype, order_date, 
+      order_money, content, create_by, 
+      create_time, update_by, update_time
+      )
+    values (#{orderCode,jdbcType=VARCHAR}, #{ctype,jdbcType=VARCHAR}, #{orderDate,jdbcType=TIMESTAMP}, 
+      #{orderMoney,jdbcType=DOUBLE}, #{content,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzf.modules.system.entity.JeecgOrderMain">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jeecg_order_main
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        order_code,
+      </if>
+      <if test="ctype != null">
+        ctype,
+      </if>
+      <if test="orderDate != null">
+        order_date,
+      </if>
+      <if test="orderMoney != null">
+        order_money,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ctype != null">
+        #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null">
+        #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderMoney != null">
+        #{orderMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wzf.modules.system.entity.JeecgOrderMainExample" resultType="java.lang.Integer">
+    select count(*) from jeecg_order_main
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update jeecg_order_main
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderCode != null">
+        order_code = #{record.orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctype != null">
+        ctype = #{record.ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderDate != null">
+        order_date = #{record.orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderMoney != null">
+        order_money = #{record.orderMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update jeecg_order_main
+    set id = #{record.id,jdbcType=VARCHAR},
+      order_code = #{record.orderCode,jdbcType=VARCHAR},
+      ctype = #{record.ctype,jdbcType=VARCHAR},
+      order_date = #{record.orderDate,jdbcType=TIMESTAMP},
+      order_money = #{record.orderMoney,jdbcType=DOUBLE},
+      content = #{record.content,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzf.modules.system.entity.JeecgOrderMain">
+    update jeecg_order_main
+    <set>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ctype != null">
+        ctype = #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDate != null">
+        order_date = #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderMoney != null">
+        order_money = #{orderMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzf.modules.system.entity.JeecgOrderMain">
+    update jeecg_order_main
+    set order_code = #{orderCode,jdbcType=VARCHAR},
+      ctype = #{ctype,jdbcType=VARCHAR},
+      order_date = #{orderDate,jdbcType=TIMESTAMP},
+      order_money = #{orderMoney,jdbcType=DOUBLE},
+      content = #{content,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

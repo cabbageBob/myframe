@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzf.modules.system.mapper.JeecgProjectNatureIncomeMapper">
+  <resultMap id="BaseResultMap" type="com.wzf.modules.system.entity.JeecgProjectNatureIncome">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="nature" jdbcType="VARCHAR" property="nature" />
+    <result column="insurance_fee" jdbcType="DECIMAL" property="insuranceFee" />
+    <result column="risk_consulting_fee" jdbcType="DECIMAL" property="riskConsultingFee" />
+    <result column="evaluation_fee" jdbcType="DECIMAL" property="evaluationFee" />
+    <result column="insurance_evaluation_fee" jdbcType="DECIMAL" property="insuranceEvaluationFee" />
+    <result column="bidding_consulting_fee" jdbcType="DECIMAL" property="biddingConsultingFee" />
+    <result column="interol_consulting_fee" jdbcType="DECIMAL" property="interolConsultingFee" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, nature, insurance_fee, risk_consulting_fee, evaluation_fee, insurance_evaluation_fee, 
+    bidding_consulting_fee, interol_consulting_fee
+  </sql>
+  <select id="selectByExample" parameterType="com.wzf.modules.system.entity.JeecgProjectNatureIncomeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jeecg_project_nature_income
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jeecg_project_nature_income
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from jeecg_project_nature_income
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wzf.modules.system.entity.JeecgProjectNatureIncomeExample">
+    delete from jeecg_project_nature_income
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wzf.modules.system.entity.JeecgProjectNatureIncome">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jeecg_project_nature_income (nature, insurance_fee, risk_consulting_fee, 
+      evaluation_fee, insurance_evaluation_fee, 
+      bidding_consulting_fee, interol_consulting_fee
+      )
+    values (#{nature,jdbcType=VARCHAR}, #{insuranceFee,jdbcType=DECIMAL}, #{riskConsultingFee,jdbcType=DECIMAL}, 
+      #{evaluationFee,jdbcType=DECIMAL}, #{insuranceEvaluationFee,jdbcType=DECIMAL}, 
+      #{biddingConsultingFee,jdbcType=DECIMAL}, #{interolConsultingFee,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzf.modules.system.entity.JeecgProjectNatureIncome">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into jeecg_project_nature_income
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="nature != null">
+        nature,
+      </if>
+      <if test="insuranceFee != null">
+        insurance_fee,
+      </if>
+      <if test="riskConsultingFee != null">
+        risk_consulting_fee,
+      </if>
+      <if test="evaluationFee != null">
+        evaluation_fee,
+      </if>
+      <if test="insuranceEvaluationFee != null">
+        insurance_evaluation_fee,
+      </if>
+      <if test="biddingConsultingFee != null">
+        bidding_consulting_fee,
+      </if>
+      <if test="interolConsultingFee != null">
+        interol_consulting_fee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="nature != null">
+        #{nature,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceFee != null">
+        #{insuranceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="riskConsultingFee != null">
+        #{riskConsultingFee,jdbcType=DECIMAL},
+      </if>
+      <if test="evaluationFee != null">
+        #{evaluationFee,jdbcType=DECIMAL},
+      </if>
+      <if test="insuranceEvaluationFee != null">
+        #{insuranceEvaluationFee,jdbcType=DECIMAL},
+      </if>
+      <if test="biddingConsultingFee != null">
+        #{biddingConsultingFee,jdbcType=DECIMAL},
+      </if>
+      <if test="interolConsultingFee != null">
+        #{interolConsultingFee,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wzf.modules.system.entity.JeecgProjectNatureIncomeExample" resultType="java.lang.Integer">
+    select count(*) from jeecg_project_nature_income
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update jeecg_project_nature_income
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.nature != null">
+        nature = #{record.nature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuranceFee != null">
+        insurance_fee = #{record.insuranceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.riskConsultingFee != null">
+        risk_consulting_fee = #{record.riskConsultingFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.evaluationFee != null">
+        evaluation_fee = #{record.evaluationFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.insuranceEvaluationFee != null">
+        insurance_evaluation_fee = #{record.insuranceEvaluationFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.biddingConsultingFee != null">
+        bidding_consulting_fee = #{record.biddingConsultingFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.interolConsultingFee != null">
+        interol_consulting_fee = #{record.interolConsultingFee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update jeecg_project_nature_income
+    set id = #{record.id,jdbcType=INTEGER},
+      nature = #{record.nature,jdbcType=VARCHAR},
+      insurance_fee = #{record.insuranceFee,jdbcType=DECIMAL},
+      risk_consulting_fee = #{record.riskConsultingFee,jdbcType=DECIMAL},
+      evaluation_fee = #{record.evaluationFee,jdbcType=DECIMAL},
+      insurance_evaluation_fee = #{record.insuranceEvaluationFee,jdbcType=DECIMAL},
+      bidding_consulting_fee = #{record.biddingConsultingFee,jdbcType=DECIMAL},
+      interol_consulting_fee = #{record.interolConsultingFee,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzf.modules.system.entity.JeecgProjectNatureIncome">
+    update jeecg_project_nature_income
+    <set>
+      <if test="nature != null">
+        nature = #{nature,jdbcType=VARCHAR},
+      </if>
+      <if test="insuranceFee != null">
+        insurance_fee = #{insuranceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="riskConsultingFee != null">
+        risk_consulting_fee = #{riskConsultingFee,jdbcType=DECIMAL},
+      </if>
+      <if test="evaluationFee != null">
+        evaluation_fee = #{evaluationFee,jdbcType=DECIMAL},
+      </if>
+      <if test="insuranceEvaluationFee != null">
+        insurance_evaluation_fee = #{insuranceEvaluationFee,jdbcType=DECIMAL},
+      </if>
+      <if test="biddingConsultingFee != null">
+        bidding_consulting_fee = #{biddingConsultingFee,jdbcType=DECIMAL},
+      </if>
+      <if test="interolConsultingFee != null">
+        interol_consulting_fee = #{interolConsultingFee,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzf.modules.system.entity.JeecgProjectNatureIncome">
+    update jeecg_project_nature_income
+    set nature = #{nature,jdbcType=VARCHAR},
+      insurance_fee = #{insuranceFee,jdbcType=DECIMAL},
+      risk_consulting_fee = #{riskConsultingFee,jdbcType=DECIMAL},
+      evaluation_fee = #{evaluationFee,jdbcType=DECIMAL},
+      insurance_evaluation_fee = #{insuranceEvaluationFee,jdbcType=DECIMAL},
+      bidding_consulting_fee = #{biddingConsultingFee,jdbcType=DECIMAL},
+      interol_consulting_fee = #{interolConsultingFee,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

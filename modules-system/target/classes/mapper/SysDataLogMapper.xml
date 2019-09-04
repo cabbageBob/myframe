@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzf.modules.system.mapper.SysDataLogMapper">
+  <resultMap id="BaseResultMap" type="com.wzf.modules.system.entity.SysDataLog">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="data_table" jdbcType="VARCHAR" property="dataTable" />
+    <result column="data_id" jdbcType="VARCHAR" property="dataId" />
+    <result column="data_version" jdbcType="INTEGER" property="dataVersion" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wzf.modules.system.entity.SysDataLog">
+    <result column="data_content" jdbcType="LONGVARCHAR" property="dataContent" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_by, create_time, update_by, update_time, data_table, data_id, data_version
+  </sql>
+  <sql id="Blob_Column_List">
+    data_content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.wzf.modules.system.entity.SysDataLogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_data_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.wzf.modules.system.entity.SysDataLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_data_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_data_log
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_data_log
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wzf.modules.system.entity.SysDataLogExample">
+    delete from sys_data_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wzf.modules.system.entity.SysDataLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_data_log (create_by, create_time, update_by, 
+      update_time, data_table, data_id, 
+      data_version, data_content)
+    values (#{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{dataTable,jdbcType=VARCHAR}, #{dataId,jdbcType=VARCHAR}, 
+      #{dataVersion,jdbcType=INTEGER}, #{dataContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzf.modules.system.entity.SysDataLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_data_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="dataTable != null">
+        data_table,
+      </if>
+      <if test="dataId != null">
+        data_id,
+      </if>
+      <if test="dataVersion != null">
+        data_version,
+      </if>
+      <if test="dataContent != null">
+        data_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataTable != null">
+        #{dataTable,jdbcType=VARCHAR},
+      </if>
+      <if test="dataId != null">
+        #{dataId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVersion != null">
+        #{dataVersion,jdbcType=INTEGER},
+      </if>
+      <if test="dataContent != null">
+        #{dataContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wzf.modules.system.entity.SysDataLogExample" resultType="java.lang.Integer">
+    select count(*) from sys_data_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_data_log
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.dataTable != null">
+        data_table = #{record.dataTable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataId != null">
+        data_id = #{record.dataId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataVersion != null">
+        data_version = #{record.dataVersion,jdbcType=INTEGER},
+      </if>
+      <if test="record.dataContent != null">
+        data_content = #{record.dataContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sys_data_log
+    set id = #{record.id,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      data_table = #{record.dataTable,jdbcType=VARCHAR},
+      data_id = #{record.dataId,jdbcType=VARCHAR},
+      data_version = #{record.dataVersion,jdbcType=INTEGER},
+      data_content = #{record.dataContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_data_log
+    set id = #{record.id,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      data_table = #{record.dataTable,jdbcType=VARCHAR},
+      data_id = #{record.dataId,jdbcType=VARCHAR},
+      data_version = #{record.dataVersion,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzf.modules.system.entity.SysDataLog">
+    update sys_data_log
+    <set>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dataTable != null">
+        data_table = #{dataTable,jdbcType=VARCHAR},
+      </if>
+      <if test="dataId != null">
+        data_id = #{dataId,jdbcType=VARCHAR},
+      </if>
+      <if test="dataVersion != null">
+        data_version = #{dataVersion,jdbcType=INTEGER},
+      </if>
+      <if test="dataContent != null">
+        data_content = #{dataContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wzf.modules.system.entity.SysDataLog">
+    update sys_data_log
+    set create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      data_table = #{dataTable,jdbcType=VARCHAR},
+      data_id = #{dataId,jdbcType=VARCHAR},
+      data_version = #{dataVersion,jdbcType=INTEGER},
+      data_content = #{dataContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzf.modules.system.entity.SysDataLog">
+    update sys_data_log
+    set create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      data_table = #{dataTable,jdbcType=VARCHAR},
+      data_id = #{dataId,jdbcType=VARCHAR},
+      data_version = #{dataVersion,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

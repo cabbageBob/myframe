@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wzf.modules.system.mapper.SysPermissionMapper">
+  <resultMap id="BaseResultMap" type="com.wzf.modules.system.entity.SysPermission">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="component" jdbcType="VARCHAR" property="component" />
+    <result column="component_name" jdbcType="VARCHAR" property="componentName" />
+    <result column="redirect" jdbcType="VARCHAR" property="redirect" />
+    <result column="menu_type" jdbcType="INTEGER" property="menuType" />
+    <result column="perms" jdbcType="VARCHAR" property="perms" />
+    <result column="perms_type" jdbcType="VARCHAR" property="permsType" />
+    <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
+    <result column="always_show" jdbcType="BIT" property="alwaysShow" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="is_route" jdbcType="BIT" property="isRoute" />
+    <result column="is_leaf" jdbcType="BIT" property="isLeaf" />
+    <result column="keep_alive" jdbcType="BIT" property="keepAlive" />
+    <result column="hidden" jdbcType="INTEGER" property="hidden" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="del_flag" jdbcType="INTEGER" property="delFlag" />
+    <result column="rule_flag" jdbcType="INTEGER" property="ruleFlag" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, parent_id, name, url, component, component_name, redirect, menu_type, perms, 
+    perms_type, sort_no, always_show, icon, is_route, is_leaf, keep_alive, hidden, description, 
+    create_by, create_time, update_by, update_time, del_flag, rule_flag, status
+  </sql>
+  <select id="selectByExample" parameterType="com.wzf.modules.system.entity.SysPermissionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_permission
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_permission
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wzf.modules.system.entity.SysPermissionExample">
+    delete from sys_permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wzf.modules.system.entity.SysPermission">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_permission (parent_id, name, url, 
+      component, component_name, redirect, 
+      menu_type, perms, perms_type, 
+      sort_no, always_show, icon, 
+      is_route, is_leaf, keep_alive, hidden, 
+      description, create_by, create_time, 
+      update_by, update_time, del_flag, 
+      rule_flag, status)
+    values (#{parentId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{component,jdbcType=VARCHAR}, #{componentName,jdbcType=VARCHAR}, #{redirect,jdbcType=VARCHAR}, 
+      #{menuType,jdbcType=INTEGER}, #{perms,jdbcType=VARCHAR}, #{permsType,jdbcType=VARCHAR}, 
+      #{sortNo,jdbcType=INTEGER}, #{alwaysShow,jdbcType=BIT}, #{icon,jdbcType=VARCHAR}, 
+      #{isRoute,jdbcType=BIT}, #{isLeaf,jdbcType=BIT}, #{keepAlive,jdbcType=BIT}, #{hidden,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{delFlag,jdbcType=INTEGER}, 
+      #{ruleFlag,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wzf.modules.system.entity.SysPermission">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="component != null">
+        component,
+      </if>
+      <if test="componentName != null">
+        component_name,
+      </if>
+      <if test="redirect != null">
+        redirect,
+      </if>
+      <if test="menuType != null">
+        menu_type,
+      </if>
+      <if test="perms != null">
+        perms,
+      </if>
+      <if test="permsType != null">
+        perms_type,
+      </if>
+      <if test="sortNo != null">
+        sort_no,
+      </if>
+      <if test="alwaysShow != null">
+        always_show,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="isRoute != null">
+        is_route,
+      </if>
+      <if test="isLeaf != null">
+        is_leaf,
+      </if>
+      <if test="keepAlive != null">
+        keep_alive,
+      </if>
+      <if test="hidden != null">
+        hidden,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="ruleFlag != null">
+        rule_flag,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null">
+        #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="componentName != null">
+        #{componentName,jdbcType=VARCHAR},
+      </if>
+      <if test="redirect != null">
+        #{redirect,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null">
+        #{menuType,jdbcType=INTEGER},
+      </if>
+      <if test="perms != null">
+        #{perms,jdbcType=VARCHAR},
+      </if>
+      <if test="permsType != null">
+        #{permsType,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null">
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="alwaysShow != null">
+        #{alwaysShow,jdbcType=BIT},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isRoute != null">
+        #{isRoute,jdbcType=BIT},
+      </if>
+      <if test="isLeaf != null">
+        #{isLeaf,jdbcType=BIT},
+      </if>
+      <if test="keepAlive != null">
+        #{keepAlive,jdbcType=BIT},
+      </if>
+      <if test="hidden != null">
+        #{hidden,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="ruleFlag != null">
+        #{ruleFlag,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wzf.modules.system.entity.SysPermissionExample" resultType="java.lang.Integer">
+    select count(*) from sys_permission
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_permission
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.component != null">
+        component = #{record.component,jdbcType=VARCHAR},
+      </if>
+      <if test="record.componentName != null">
+        component_name = #{record.componentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.redirect != null">
+        redirect = #{record.redirect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuType != null">
+        menu_type = #{record.menuType,jdbcType=INTEGER},
+      </if>
+      <if test="record.perms != null">
+        perms = #{record.perms,jdbcType=VARCHAR},
+      </if>
+      <if test="record.permsType != null">
+        perms_type = #{record.permsType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sortNo != null">
+        sort_no = #{record.sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="record.alwaysShow != null">
+        always_show = #{record.alwaysShow,jdbcType=BIT},
+      </if>
+      <if test="record.icon != null">
+        icon = #{record.icon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isRoute != null">
+        is_route = #{record.isRoute,jdbcType=BIT},
+      </if>
+      <if test="record.isLeaf != null">
+        is_leaf = #{record.isLeaf,jdbcType=BIT},
+      </if>
+      <if test="record.keepAlive != null">
+        keep_alive = #{record.keepAlive,jdbcType=BIT},
+      </if>
+      <if test="record.hidden != null">
+        hidden = #{record.hidden,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delFlag != null">
+        del_flag = #{record.delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleFlag != null">
+        rule_flag = #{record.ruleFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_permission
+    set id = #{record.id,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      url = #{record.url,jdbcType=VARCHAR},
+      component = #{record.component,jdbcType=VARCHAR},
+      component_name = #{record.componentName,jdbcType=VARCHAR},
+      redirect = #{record.redirect,jdbcType=VARCHAR},
+      menu_type = #{record.menuType,jdbcType=INTEGER},
+      perms = #{record.perms,jdbcType=VARCHAR},
+      perms_type = #{record.permsType,jdbcType=VARCHAR},
+      sort_no = #{record.sortNo,jdbcType=INTEGER},
+      always_show = #{record.alwaysShow,jdbcType=BIT},
+      icon = #{record.icon,jdbcType=VARCHAR},
+      is_route = #{record.isRoute,jdbcType=BIT},
+      is_leaf = #{record.isLeaf,jdbcType=BIT},
+      keep_alive = #{record.keepAlive,jdbcType=BIT},
+      hidden = #{record.hidden,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_by = #{record.updateBy,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      del_flag = #{record.delFlag,jdbcType=INTEGER},
+      rule_flag = #{record.ruleFlag,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wzf.modules.system.entity.SysPermission">
+    update sys_permission
+    <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="component != null">
+        component = #{component,jdbcType=VARCHAR},
+      </if>
+      <if test="componentName != null">
+        component_name = #{componentName,jdbcType=VARCHAR},
+      </if>
+      <if test="redirect != null">
+        redirect = #{redirect,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null">
+        menu_type = #{menuType,jdbcType=INTEGER},
+      </if>
+      <if test="perms != null">
+        perms = #{perms,jdbcType=VARCHAR},
+      </if>
+      <if test="permsType != null">
+        perms_type = #{permsType,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null">
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="alwaysShow != null">
+        always_show = #{alwaysShow,jdbcType=BIT},
+      </if>
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="isRoute != null">
+        is_route = #{isRoute,jdbcType=BIT},
+      </if>
+      <if test="isLeaf != null">
+        is_leaf = #{isLeaf,jdbcType=BIT},
+      </if>
+      <if test="keepAlive != null">
+        keep_alive = #{keepAlive,jdbcType=BIT},
+      </if>
+      <if test="hidden != null">
+        hidden = #{hidden,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="ruleFlag != null">
+        rule_flag = #{ruleFlag,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wzf.modules.system.entity.SysPermission">
+    update sys_permission
+    set parent_id = #{parentId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      component = #{component,jdbcType=VARCHAR},
+      component_name = #{componentName,jdbcType=VARCHAR},
+      redirect = #{redirect,jdbcType=VARCHAR},
+      menu_type = #{menuType,jdbcType=INTEGER},
+      perms = #{perms,jdbcType=VARCHAR},
+      perms_type = #{permsType,jdbcType=VARCHAR},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      always_show = #{alwaysShow,jdbcType=BIT},
+      icon = #{icon,jdbcType=VARCHAR},
+      is_route = #{isRoute,jdbcType=BIT},
+      is_leaf = #{isLeaf,jdbcType=BIT},
+      keep_alive = #{keepAlive,jdbcType=BIT},
+      hidden = #{hidden,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=INTEGER},
+      rule_flag = #{ruleFlag,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
